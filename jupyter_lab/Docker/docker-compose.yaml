@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+    jupyter_lab:
+        build: 
+            context: .
+            dockerfile: ./jupyter_lab/build/Dockerfile
+        volumes:
+            - ./jupyter_lab:/root/jupyter_lab
+        environment:
+            TZ: "Asia/Tokyo"
+        networks:
+            - default
+        entrypoint: >
+            jupyter-lab
+            --allow-root
+            --ip=0.0.0.0
+            --port=8888
+            --no-browser
+            --NotebookApp.token=''
+            --notebook-dir=/root/jupyter_lab/codes
+        ports:
+            - "${JUPYTER_LAB_PORT}:8888" #外に出すポートを指定
+
